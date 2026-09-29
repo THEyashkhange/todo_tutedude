@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>My To-Do List</h1>
+    <a href="/submittodoitem">Add New Task</a>
+    <hr>
+    <ul>
+        {% for todo in todos %}
+            <li>
+                <strong>{{ todo.itemName }}</strong>: {{ todo.itemDescription }}
+            </li>
+        {% else %}
+            <li>No tasks added yet!</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
