@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Task</title>
+</head>
+<body>
+    <h1>Add a New Task</h1>
+    <form action="/submittodoitem" method="POST">
+        <label for="itemName">Item Name:</label><br>
+        <input type="text" id="itemName" name="itemName" required><br><br>
+
+        <label for="itemDescription">Item Description:</label><br>
+        <textarea id="itemDescription" name="itemDescription" rows="4" cols="30"></textarea><br><br>
+
+        <button type="submit">Submit Task</button>
+    </form>
+    <br>
+    <a href="/">Back to List</a>
+</body>
+</html>
