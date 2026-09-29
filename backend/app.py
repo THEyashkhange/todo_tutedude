@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
 from dotenv import load_dotenv
 
@@ -15,22 +15,24 @@ app = Flask(__name__, template_folder=frontend_dir)
 
 @app.route('/')
 def show_todo():
-    return render_template('index.html')
+    todos = list(connect.find({}, {"_id": 0}))
+    return render_template('index.html', todos=todos)
 
-@app.route('/submittodoitem', methods=['POST'])
+@app.route('/submittodoitem', methods=['GET', 'POST'])
 def add_todo():
-    item_name = request.form.get('itemName')
-    item_description = request.form.get('itemDescription')
-    
-    if item_name:
-        add_list = {
-            "itemName": item_name,
-            "itemDescription": item_description
-        }
-        connect.insert_one(add_list)
-        return "Task successfully added to MongoDB!", 201
+    if request.method == 'POST':
+        item_name = request.form.get('itemName')
+        item_description = request.form.get('itemDescription')
         
-    return "Error: Item Name is required.", 400
+        if item_name:
+            add_list = {
+                "itemName": item_name,
+                "itemDescription": item_description
+            }
+            connect.insert_one(add_list)
+            return redirect(url_for('show_todo'))
+            
+    return render_template('add_todo.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
